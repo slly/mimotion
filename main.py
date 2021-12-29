@@ -490,10 +490,10 @@ class ToPush:
     推送接口类
     处理pkey并转发推送消息到推送函数
     """
-    push_msg: str
 
     def __init__(self, _pkey):
         self.pkey = _pkey
+        self.pkey = ""
 
     def to_push_wx(self):
         """
