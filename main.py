@@ -328,7 +328,7 @@ def get_app_token(login_token):
     return app_token
 
 
-def push_wx(_sckey, desp=""):
+def push_wx(_sckey, _step, desp=""):
     """
     推送server酱
     """
@@ -337,7 +337,7 @@ def push_wx(_sckey, desp=""):
     else:
         server_url = f"https://sc.ftqq.com/{_sckey}.send"
         params = {
-            "text": '小米运动 步数修改',
+            "text": _step + '步的步数设置成功',
             "desp": desp
         }
 
@@ -491,9 +491,10 @@ class ToPush:
     处理pkey并转发推送消息到推送函数
     """
 
-    def __init__(self, _pkey):
+    def __init__(self, _pkey, _step):
         self.pkey = _pkey
         self.push_msg = ""
+        self.push_step = _step
 
     def to_push_wx(self):
         """
@@ -501,7 +502,7 @@ class ToPush:
         """
         if str(self.pkey) == '0':
             self.pkey = ''
-        push_wx(self.pkey, self.push_msg)
+        push_wx(self.pkey, self.push_msg, self.push_step)
 
     def to_push_server(self):
         """
@@ -509,7 +510,7 @@ class ToPush:
         """
         if str(self.pkey) == '0':
             self.pkey = ''
-        push_server(self.pkey, self.push_msg)
+        push_server(self.pkey, self.push_msg, self.push_step)
 
     def to_push_tg(self):
         """
@@ -517,7 +518,7 @@ class ToPush:
         """
         try:
             token, chat_id = self.pkey.split('@')
-            push_tg(token, chat_id, self.push_msg)
+            push_tg(token, chat_id, self.push_msg, self.push_step)
         except ValueError:
             print('tg推送参数有误！')
 
@@ -541,7 +542,7 @@ class ToPush:
         if self.pkey == '':
             print('pushplus token错误')
         else:
-            push_pushplus(self.pkey, self.push_msg)
+            push_pushplus(self.pkey, self.push_msg, self.push_step)
 
     @staticmethod
     def no_push():
@@ -557,8 +558,6 @@ if __name__ == "__main__":
     try:
         Pm = sys.argv[1]
         pkey = sys.argv[2]
-
-        to_push = ToPush(pkey)
 
         # 用户名（格式为 13800138000）
         user = sys.argv[3]
@@ -584,6 +583,7 @@ if __name__ == "__main__":
                 step = ''
             push_msg += main(user, passwd, step) + '\n'
 
+        to_push = ToPush(pkey,step)
         push = {
             'wx': to_push.to_push_wx,
             'nwx': to_push.to_push_server,
