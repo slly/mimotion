@@ -337,7 +337,7 @@ def push_wx(_sckey, desp=""):
     else:
         server_url = f"https://sc.ftqq.com/{_sckey}.send"
         params = {
-            "text": '小米运动 步数修改',
+            "text": '运动步数设置成功',
             "desp": desp
         }
 
@@ -359,7 +359,7 @@ def push_server(_sckey, desp=""):
     else:
         server_url = f"https://sctapi.ftqq.com/{_sckey}.send"
         params = {
-            "title": '小米运动 步数修改',
+            "title": '运动步数设置成功',
             "desp": desp
         }
 
@@ -382,7 +382,7 @@ def push_pushplus(token, content=""):
         server_url = "http://www.pushplus.plus/send"
         params = {
             "token": token,
-            "title": '小米运动 步数修改',
+            "title": '运动步数设置成功',
             "content": content
         }
 
@@ -406,7 +406,7 @@ def push_tg(token, chat_id, desp=""):
     else:
         server_url = f"https://api.telegram.org/bot{token}/sendmessage"
         params = {
-            "text": '小米运动 步数修改\n\n' + desp,
+            "text": '运动步数设置成功\n\n' + desp,
             "chat_id": chat_id
         }
 
