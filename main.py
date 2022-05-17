@@ -494,6 +494,7 @@ class ToPush:
 
     def __init__(self, _pkey):
         self.pkey = _pkey
+        self.push_msg = ''
 
     def to_push_wx(self):
         """
